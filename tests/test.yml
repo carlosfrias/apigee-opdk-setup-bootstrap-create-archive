@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - opdk-setup-local-repository
+    - apigee-opdk-setup-local-repository

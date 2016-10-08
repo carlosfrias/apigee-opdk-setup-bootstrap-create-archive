@@ -1,5 +1,5 @@
 ---
-# tasks file for opdk-setup-local-repository
+# tasks file for apigee-opdk-setup-local-repository
 - name: Install the local mirror
   shell: "{{ apigee_service }} apigee-mirror install"
 
