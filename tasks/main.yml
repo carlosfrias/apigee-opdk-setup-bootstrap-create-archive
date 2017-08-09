@@ -1,20 +1,9 @@
 ---
 # tasks file for apigee-opdk-setup-local-repository
-- name: Install the local mirror
-  shell: "{{ apigee_service }} apigee-mirror install"
+- name: Install the local mirror with no proxy
+  include: with_no_proxy.yml
+  when: https_proxy is not defined and http_proxy is not defined
 
-- name: Clear the local mirror data directory
-  shell: "{{ apigee_service }} apigee-mirror clean"
-  register: result
-
-- name: Sync the local mirror with only new rpms
-  shell: "{{ apigee_service }} apigee-mirror sync --only-new-rpms apigeereleasever={{ apigee_mirror_version }}"
-  when: all_rpms is not defined and not all_rpms == bool | True
-
-- name: Sync the local mirror with all rpms
-  shell: "{{ apigee_service }} apigee-mirror sync apigeereleasever={{ apigee_mirror_version }}"
-  when: all_rpms is defined and all_rpms == bool | True
-
-- name: Create archive
-  shell: "{{ apigee_service }} apigee-mirror package"
-  register: result
+- name: Install the local mirror with no proxy
+  include: with_proxy.yml
+  when: https_proxy is defined and http_proxy is defined
