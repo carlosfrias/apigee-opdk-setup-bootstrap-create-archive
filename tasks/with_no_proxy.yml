@@ -5,8 +5,8 @@
   args:
     creates: "{{ apigee_installation_home }}/apigee-mirror/lib/actions/nginxconfig"
 
-- name: Clear the local mirror data directory with no proxy
-  shell: "{{ apigee_service }} apigee-mirror clean"
+#- name: Clear the local mirror data directory with no proxy
+#  shell: "{{ apigee_service }} apigee-mirror clean"
 
 - name: Sync the local mirror with only new rpms with no proxy
   shell: "{{ apigee_service }} apigee-mirror sync --only-new-rpms apigeereleasever={{ apigee_mirror_version }}"
