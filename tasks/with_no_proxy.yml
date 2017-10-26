@@ -3,7 +3,7 @@
 - name: Install the local mirror with no proxy
   shell: "{{ apigee_service }} apigee-mirror install"
   args:
-    creates: "{{ apigee_installation_home }}/apigee-mirror/lib/actions/nginxconfig"
+    creates: "{{ apigee_home }}/apigee-mirror/lib/actions/nginxconfig"
 
 #- name: Clear the local mirror data directory with no proxy
 #  shell: "{{ apigee_service }} apigee-mirror clean"
