@@ -5,6 +5,8 @@
     value: "{{ item.value }}"
   with_items:
   - { key: 'apigee_mirror_version', value: '{{ apigee_mirror_version }}' }
+  - { key: 'copy_archive', value: '{{ copy_archive }}' }
+  - { key: 'apigee_archive_name', value: '{{ apigee_archive_name }}' }
 
 # tasks file for apigee-opdk-setup-local-repository
 - name: Install the local mirror with no proxy
