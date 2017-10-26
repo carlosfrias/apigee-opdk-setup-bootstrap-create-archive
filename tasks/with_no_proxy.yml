@@ -1,4 +1,5 @@
 ---
+---
 # tasks file for apigee-opdk-setup-local-repository
 - name: Install the local mirror with no proxy
   shell: "{{ apigee_service }} apigee-mirror install"

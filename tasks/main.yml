@@ -1,9 +1,15 @@
 ---
+- name: Update cache with key and value
+  cache:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_items:
+  - { key: 'apigee_mirror_version', value: '{{ apigee_mirror_version }}' }
+
 # tasks file for apigee-opdk-setup-local-repository
 - name: Install the local mirror with no proxy
   include_tasks: with_no_proxy.yml
   when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
-
 
 - name: Install the local mirror with no proxy
   include_tasks: with_proxy.yml
