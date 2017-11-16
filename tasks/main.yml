@@ -9,10 +9,40 @@
   - { key: 'apigee_archive_name', value: '{{ apigee_archive_name }}' }
 
 # tasks file for apigee-opdk-setup-local-repository
-- name: Install the local mirror with no proxy
-  include_tasks: with_no_proxy.yml
-  when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
+#- name: Install the local mirror with no proxy
+#  include_tasks: with_no_proxy.yml
+#  when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
+#
+#- name: Install the local mirror with no proxy
+#  include_tasks: with_proxy.yml
+#  when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
 
-- name: Install the local mirror with no proxy
-  include_tasks: with_proxy.yml
-  when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
+- name: Install the local mirror with proxy
+  shell: "{{ apigee_service }} apigee-mirror install"
+  environment:
+    no_proxy: "{{ no_proxy }}"
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+
+- name: Sync the local mirror with only new rpms with proxy
+  shell: "{{ apigee_service }} apigee-mirror sync --only-new-rpms apigeereleasever={{ apigee_mirror_version }}"
+  when: all_rpms is not defined and not all_rpms | bool == True
+  environment:
+    no_proxy: "{{ no_proxy }}"
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+
+- name: Sync the local mirror with all rpms with proxy
+  shell: "{{ apigee_service }} apigee-mirror sync apigeereleasever={{ apigee_mirror_version }}"
+  when: all_rpms is defined and all_rpms | bool == True
+  environment:
+    no_proxy: "{{ no_proxy }}"
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+
+- name: Create archive with proxy
+  shell: "{{ apigee_service }} apigee-mirror package"
+  environment:
+    no_proxy: "{{ no_proxy }}"
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"

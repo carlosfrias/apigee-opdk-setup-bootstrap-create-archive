@@ -7,17 +7,16 @@
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
 
-- name: Clear the local mirror data directory with proxy
-  shell: "{{ apigee_service }} apigee-mirror clean"
-  environment:
-    no_proxy: "{{ no_proxy }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
+#- name: Clear the local mirror data directory with proxy
+#  shell: "{{ apigee_service }} apigee-mirror clean"
+#  environment:
+#    no_proxy: "{{ no_proxy }}"
+#    http_proxy: "{{ http_proxy }}"
+#    https_proxy: "{{ https_proxy }}"
 
 - name: Sync the local mirror with only new rpms with proxy
   shell: "{{ apigee_service }} apigee-mirror sync --only-new-rpms apigeereleasever={{ apigee_mirror_version }}"
   when: all_rpms is not defined and not all_rpms | bool == True
-
   environment:
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
