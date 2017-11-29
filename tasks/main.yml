@@ -5,7 +5,6 @@
     value: "{{ item.value }}"
   with_items:
   - { key: 'copy_archive', value: '{{ copy_archive }}' }
-  - { key: 'apigee_archive_name', value: '{{ apigee_archive_name }}' }
 
 - name: Install the local mirror with proxy
   shell: "{{ apigee_service }} apigee-mirror install"
