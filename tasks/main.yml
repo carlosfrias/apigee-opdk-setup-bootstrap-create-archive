@@ -16,7 +16,7 @@
     https_proxy: "{{ https_proxy }}"
 
 - name: Sync the local mirror with only new rpms with proxy
-  shell: "{{ apigee_service }} apigee-mirror sync --only-new-rpms apigeereleasever={{ apigee_mirror_version }}"
+  shell: "{{ apigee_service }} apigee-mirror sync --only-new-rpms apigeereleasever={{ apigee_mirror_version | default(opdk_version) }}"
   when: all_rpms is not defined and not all_rpms | bool == True
   environment:
     no_proxy: "{{ no_proxy }}"
@@ -24,7 +24,7 @@
     https_proxy: "{{ https_proxy }}"
 
 - name: Sync the local mirror with all rpms with proxy
-  shell: "{{ apigee_service }} apigee-mirror sync apigeereleasever={{ apigee_mirror_version }}"
+  shell: "{{ apigee_service }} apigee-mirror sync apigeereleasever={{ apigee_mirror_version | default(opdk_version) }}"
   when: all_rpms is defined and all_rpms | bool == True
   environment:
     no_proxy: "{{ no_proxy }}"
