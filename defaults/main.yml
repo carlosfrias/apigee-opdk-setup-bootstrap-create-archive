@@ -7,4 +7,4 @@ apigee_mirror_version: "{{ opdk_version }}"
 copy_archive: yes
 
 # Apigee archive that is created when a mirror is used.
-apigee_archive_name: apigee-{{ opdk_version }}.tar.gz
+apigee_archive_name: "apigee-{{ opdk_version }}.tar.gz"
