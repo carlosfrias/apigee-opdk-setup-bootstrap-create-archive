@@ -31,7 +31,7 @@
 
 - name: Update with any extra packages that should be transported manually
   become: yes
-  shell: "yum reinstall --downloadonly --downloaddir={{ apigee_home }}/data/apigee-mirror/repos/thirdparty/7 {{ archive_extra_packages.join(' ') }}"
+  shell: "yum reinstall --downloadonly --downloaddir={{ apigee_home }}/data/apigee-mirror/repos/thirdparty/7 {{ archive_extra_packages | join(' ') }}"
   when: archive_extra_packages is defined
 
 - name: Create archive with proxy
