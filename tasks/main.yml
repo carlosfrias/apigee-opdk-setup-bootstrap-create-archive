@@ -29,6 +29,11 @@
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
 
+- name: Update with any extra packages that should be transported manually
+  become: yes
+  shell: "yum reinstall --downloadonly --downloaddir={{ apigee_home }}/data/apigee-mirror/repos/thirdparty/7 {{ archive_extra_packages.join(' ') }}"
+  when: archive_extra_packages is defined
+
 - name: Create archive with proxy
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror package"
   environment:
