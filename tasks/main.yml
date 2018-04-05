@@ -6,15 +6,15 @@
   with_items:
   - { key: 'copy_archive', value: '{{ copy_archive }}' }
 
-- name: Clear yum cache
-  become: yes
-  shell: yum clean all
-
-- name: Clear yum disk cache
-  become: yes
-  file:
-    path: /var/cache/yum
-    state: absent
+#- name: Clear yum cache
+#  become: yes
+#  shell: yum clean all
+#
+#- name: Clear yum disk cache
+#  become: yes
+#  file:
+#    path: /var/cache/yum
+#    state: absent
 
 - name: Uninstall the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall
@@ -24,15 +24,15 @@
     https_proxy: "{{ https_proxy }}"
   args:
     removes: "{{ apigee_home }}/apigee-mirror"
-
-- name: Update apigeereleasever variable for Yum to opdk_version
-  become: yes
-  copy:
-    content: "{{ opdk_version}}"
-    dest: /etc/yum/vars/apigeereleasever
-    mode: 600
-    owner: root
-    group: root
+#
+#- name: Update apigeereleasever variable for Yum to opdk_version
+#  become: yes
+#  copy:
+#    content: "{{ opdk_version}}"
+#    dest: /etc/yum/vars/apigeereleasever
+#    mode: 600
+#    owner: root
+#    group: root
 
 - name: Install the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror install
@@ -80,12 +80,3 @@
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
-
-- name: Restore apigeereleasever variable for Yum to opdk_version
-  become: yes
-  copy:
-    content: "{{ opdk_version}}"
-    dest: /etc/yum/vars/apigeereleasever
-    mode: 600
-    owner: root
-    group: root
