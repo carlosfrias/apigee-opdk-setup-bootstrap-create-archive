@@ -25,7 +25,7 @@
   args:
     removes: "{{ apigee_home }}/apigee-mirror"
 
-- name: Update apigeereleasevar variable for Yum to opdk_version
+- name: Update apigeereleasever variable for Yum to opdk_version
   become: yes
   copy:
     content: "{{ opdk_version}}"
@@ -42,10 +42,10 @@
     https_proxy: "{{ https_proxy }}"
   creates: "{{ apigee_home }}/apigee-mirror"
 
-- name: Update apigeereleasevar variable for Yum for apigee-mirror sync
+- name: Update apigeereleasever variable for Yum for apigee-mirror sync
   become: yes
   copy:
-    content: "{{ apigeereleasevar }}"
+    content: "{{ apigeereleasever }}"
     dest: /etc/yum/vars/apigeereleasever
     mode: 600
     owner: root
@@ -81,7 +81,7 @@
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
 
-- name: Restore apigeereleasevar variable for Yum to opdk_version
+- name: Restore apigeereleasever variable for Yum to opdk_version
   become: yes
   copy:
     content: "{{ opdk_version}}"
