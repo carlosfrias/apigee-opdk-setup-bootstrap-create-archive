@@ -25,24 +25,6 @@
   args:
     removes: "{{ apigee_home }}/apigee-mirror"
 
-- name: Update apigeereleasevar variable for Yum
-  become: yes
-  copy:
-    content: "{{ opdk_version}}"
-    dest: /etc/yum/vars/apigeereleasever
-    mode: 600
-    owner: root
-    group: root
-
-- name: Update apigeeexclude variable for Yum
-  become: yes
-  copy:
-    content: "apigee-sap* baas-sap*"
-    dest: /etc/yum/vars/apigeeexclude
-    mode: 600
-    owner: root
-    group: root
-
 - name: Install the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror install
   environment:
@@ -61,20 +43,22 @@
     group: root
 
 - name: Sync the local mirror with only new rpms
+  ignore_errors: yes
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync --only-new-rpms apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
-  when: all_rpms is not defined and not all_rpms | bool == True
   environment:
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+  when: all_rpms is not defined and not all_rpms | bool == True
 
 - name: Sync the local mirror with all rpms
+  ignore_errors: yes
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
-  when: all_rpms is defined and all_rpms | bool == True
   environment:
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+  when: all_rpms is defined and all_rpms | bool == True
 
 - name: Update with any extra packages that should be transported manually
   become: yes
