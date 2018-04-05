@@ -25,6 +25,15 @@
   args:
     removes: "{{ apigee_home }}/apigee-mirror"
 
+- name: Update apigeereleasevar variable for Yum
+  become: yes
+  copy:
+    content: "{{ opdk_version}}"
+    dest: /etc/yum/vars/apigeereleasever
+    mode: 600
+    owner: root
+    group: root
+
 - name: Install the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror install
   environment:
