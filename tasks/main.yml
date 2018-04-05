@@ -34,6 +34,15 @@
     owner: root
     group: root
 
+- name: Update apigeeexclude variable for Yum
+  become: yes
+  copy:
+    content: "apigee-sap* baas-sap*"
+    dest: /etc/yum/vars/apigeeexclude
+    mode: 600
+    owner: root
+    group: root
+
 - name: Install the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror install
   environment:
