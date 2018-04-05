@@ -21,6 +21,7 @@
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+  creates: "{{ apigee_home }}/apigee-mirror"
 
 - name: Sync the local mirror with only new rpms
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync --only-new-rpms apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
