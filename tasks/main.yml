@@ -33,15 +33,6 @@
     https_proxy: "{{ https_proxy }}"
   creates: "{{ apigee_home }}/apigee-mirror"
 
-- name: Update apigeereleasevar variable for Yum
-  become: yes
-  copy:
-    content: "{{ apigeereleasever | default(opdk_version) }}"
-    dest: /etc/yum/vars/apigeereleasever
-    mode: 600
-    owner: root
-    group: root
-
 - name: Sync the local mirror with only new rpms
   ignore_errors: yes
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync --only-new-rpms apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
