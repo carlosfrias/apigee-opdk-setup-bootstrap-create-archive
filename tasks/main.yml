@@ -80,3 +80,12 @@
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+
+- name: Restore apigeereleasevar variable for Yum to opdk_version
+  become: yes
+  copy:
+    content: "{{ opdk_version}}"
+    dest: /etc/yum/vars/apigeereleasever
+    mode: 600
+    owner: root
+    group: root
