@@ -28,7 +28,7 @@
   copy:
     content: "{{ apigeereleasever | default(opdk_version) }}"
     dest: /etc/yum/vars/apigeereleasever
-    chmod: 600
+    mode: 600
     owner: root
     group: root
 
