@@ -6,6 +6,16 @@
   with_items:
   - { key: 'copy_archive', value: '{{ copy_archive }}' }
 
+- name: Clear yum cache
+  become: yes
+  shell: yum clean all
+
+- name: Clear yum disk cache
+  become: yes
+  file:
+    path: /var/cache/yum
+    state: absent
+
 - name: Uninstall the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall
   environment:
