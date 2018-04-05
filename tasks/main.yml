@@ -7,14 +7,20 @@
   - { key: 'copy_archive', value: '{{ copy_archive }}' }
 
 - name: Install the local mirror with proxy
-  shell: "{{ item }}"
+  shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall
   environment:
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
-  with_items:
-  - "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall"
-  - "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror install"
+  args:
+    removes: "{{ apigee_home }}/apigee-mirror"
+
+- name: Install the local mirror with proxy
+  shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror install
+  environment:
+    no_proxy: "{{ no_proxy }}"
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
 
 - name: Sync the local mirror with only new rpms with proxy
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync --only-new-rpms apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
