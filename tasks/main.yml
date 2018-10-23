@@ -19,9 +19,9 @@
 - name: Uninstall the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall
   environment:
-    no_proxy: "{{ no_proxy }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy | default('') }}"
+    http_proxy: "{{ http_proxy | default('') }}"
+    https_proxy: "{{ https_proxy | default('') }}"
   args:
     removes: "{{ apigee_home }}/apigee-mirror"
 #
@@ -37,9 +37,9 @@
 - name: Install the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror install
   environment:
-    no_proxy: "{{ no_proxy }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy | default('') }}"
+    http_proxy: "{{ http_proxy | default('') }}"
+    https_proxy: "{{ https_proxy | default('') }}"
   creates: "{{ apigee_home }}/apigee-mirror"
 
 - name: Update apigeereleasever variable for Yum for apigee-mirror sync
@@ -55,18 +55,18 @@
   ignore_errors: yes
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync --only-new-rpms apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
   environment:
-    no_proxy: "{{ no_proxy }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy | default('') }}"
+    http_proxy: "{{ http_proxy | default('') }}"
+    https_proxy: "{{ https_proxy | default('') }}"
   when: all_rpms is not defined and not all_rpms | bool == True
 
 - name: Sync the local mirror with all rpms
   ignore_errors: yes
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
   environment:
-    no_proxy: "{{ no_proxy }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy | default('') }}"
+    http_proxy: "{{ http_proxy | default('') }}"
+    https_proxy: "{{ https_proxy | default('') }}"
   when: all_rpms is defined and all_rpms | bool == True
 
 - name: Update with any extra packages that should be transported manually
@@ -77,6 +77,6 @@
 - name: Create archive
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror package"
   environment:
-    no_proxy: "{{ no_proxy }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy | default('') }}"
+    http_proxy: "{{ http_proxy | default('') }}"
+    https_proxy: "{{ https_proxy | default('') }}"
