@@ -35,7 +35,7 @@
 #    group: root
 
 - name: Install the local mirror
-  shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror install
+  shell: '/opt/apigee/apigee-service/bin/apigee-service apigee-mirror install'
   args:
     creates: "{{ apigee_home }}/apigee-mirror"
   environment:
