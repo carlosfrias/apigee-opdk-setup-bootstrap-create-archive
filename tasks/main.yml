@@ -36,11 +36,12 @@
 
 - name: Install the local mirror
   shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror install
+  args:
+    creates: "{{ apigee_home }}/apigee-mirror"
   environment:
     no_proxy: "{{ no_proxy | default('') }}"
     http_proxy: "{{ http_proxy | default('') }}"
     https_proxy: "{{ https_proxy | default('') }}"
-  creates: "{{ apigee_home }}/apigee-mirror"
 
 - name: Update apigeereleasever variable for Yum for apigee-mirror sync
   become: yes
