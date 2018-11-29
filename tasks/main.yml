@@ -17,14 +17,14 @@
 #    state: absent
 
 - name: Uninstall the local mirror
-  shell: /opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall
+  shell: '/opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall'
   environment:
     no_proxy: "{{ no_proxy | default('') }}"
     http_proxy: "{{ http_proxy | default('') }}"
     https_proxy: "{{ https_proxy | default('') }}"
   args:
     removes: "{{ apigee_home }}/apigee-mirror"
-#
+
 #- name: Update apigeereleasever variable for Yum to opdk_version
 #  become: yes
 #  copy:
