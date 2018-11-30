@@ -6,29 +6,19 @@
   with_items:
   - { key: 'copy_archive', value: '{{ copy_archive }}' }
 
-#- name: Clear yum cache
-#  become: yes
-#  shell: yum clean all
-#
-#- name: Clear yum disk cache
-#  become: yes
-#  file:
-#    path: /var/cache/yum
-#    state: absent
-
 - name: Uninstall the local mirror
   shell: '/opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall'
+  args:
+    removes: "{{ apigee_home }}/apigee-mirror"
   environment:
     no_proxy: "{{ no_proxy | default('') }}"
     http_proxy: "{{ http_proxy | default('') }}"
     https_proxy: "{{ https_proxy | default('') }}"
-  args:
-    removes: "{{ apigee_home }}/apigee-mirror"
 
 #- name: Update apigeereleasever variable for Yum to opdk_version
 #  become: yes
 #  copy:
-#    content: "{{ opdk_version}}"
+#    content: "{{ apigeereleasever }}"
 #    dest: /etc/yum/vars/apigeereleasever
 #    mode: 600
 #    owner: root
@@ -46,7 +36,7 @@
 - name: Update apigeereleasever variable for Yum for apigee-mirror sync
   become: yes
   copy:
-    content: "{{ apigeereleasever }}"
+    content: "{{ apigeereleasever | default(opdk_version) }}"
     dest: /etc/yum/vars/apigeereleasever
     mode: 600
     owner: root
@@ -55,6 +45,8 @@
 - name: Sync the local mirror with only new rpms
   ignore_errors: yes
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync --only-new-rpms apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
+  args:
+    removes: "{{ apigee_home }}/apigee-mirror"
   environment:
     no_proxy: "{{ no_proxy | default('') }}"
     http_proxy: "{{ http_proxy | default('') }}"
@@ -64,6 +56,8 @@
 - name: Sync the local mirror with all rpms
   ignore_errors: yes
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror sync apigeereleasever={{ apigeereleasever | default(opdk_version) }}"
+  args:
+    removes: "{{ apigee_home }}/apigee-mirror"
   environment:
     no_proxy: "{{ no_proxy | default('') }}"
     http_proxy: "{{ http_proxy | default('') }}"
@@ -73,10 +67,14 @@
 - name: Update with any extra packages that should be transported manually
   become: yes
   shell: "yum reinstall --downloadonly --downloaddir={{ apigee_home }}/data/apigee-mirror/repos/thirdparty/7 {{ archive_extra_packages | join(' ') }}"
+  args:
+    removes: "{{ apigee_home }}/data/apigee-mirror/repos/thirdparty/7"
   when: archive_extra_packages is defined
 
 - name: Create archive
   shell: "/opt/apigee/apigee-service/bin/apigee-service apigee-mirror package"
+  args:
+    removes: "{{ apigee_home }}/apigee-mirror"
   environment:
     no_proxy: "{{ no_proxy | default('') }}"
     http_proxy: "{{ http_proxy | default('') }}"

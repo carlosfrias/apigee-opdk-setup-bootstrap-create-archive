@@ -1,17 +1,27 @@
-Role Name
-=========
+# Apigee OPDK Mirror Archive Creator
 
-A brief description of the role goes here.
+This role will create an Apigee Mirror to be used to install Apigee in an offline environments.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The Apigee Bootstrap must be installed so that the Apigee Service component is available prior to 
+running this role. 
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+These are the variables that can be updated for this role:
+
+| Name | Description |
+| --- | --- |
+| copy_archive | Copy the Apigee Mirror archive from the control machine or use an existing archive on a target server. Default: `copy_archive: yes` |
+| apigee_home | Apigee installation home. Default: /opt/apigee |
+| no_proxy | no proxy environment variable. Default: '' |
+| http_proxy | http proxy environment variable. Default: '' |
+| https_proxy | https proxy environment variable. Default: '' |
+| apigeereleasever | Apigee release version. Default: opdk_version |
+| archive_extra_packages | List of extra packages to include in the archive. Default list: yum-utils, yum-plugin-priorities, libdb4-4.8* |
 
 Dependencies
 ------------
@@ -23,9 +33,18 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: mirror
+      vars: 
+        copy_archive: yes
+        apigee_home: /opt/apigee
+        apigeereleasever: 4.18.05
+        archive_extra_packages: 
+        - yum-utils
+        - yum-plugin-priorities
+        - libdb4-4.8*
+        
       roles:
-         - { role: username.rolename, x: 42 }
+      - { role: apigee-opdk-setup-bootstrap-create-archive, tags: ['create'] }
 
 License
 -------
