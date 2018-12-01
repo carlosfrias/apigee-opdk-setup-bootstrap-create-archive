@@ -37,6 +37,7 @@ Including an example of how to use your role (for instance, with variables passe
       vars: 
         copy_archive: yes
         apigee_home: /opt/apigee
+        opdk_version: 4.18.05
         apigeereleasever: 4.18.05
         archive_extra_packages: 
         - yum-utils
@@ -49,10 +50,12 @@ Including an example of how to use your role (for instance, with variables passe
 License
 -------
 
-BSD
+Apache 2.0
 
 Author Information
 ------------------
+
+Carlos Frias
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
 <!-- BEGIN Google Required Disclaimer -->
