@@ -65,7 +65,7 @@ is always nice for users too:
         ansible_workspace: "~/.ansible"
         apigee_workspace: "~/apigee-workspace"
         property_folders:
-        - "~/.apigee-secure"
+        - "~/apigee-secure"
       roles:
       - { role: apigee-opdk-modules }
       - { role: apigee-opdk-setup-os-epel, tags: ['epel'] }
