@@ -63,9 +63,9 @@ is always nice for users too:
         - yum-plugin-priorities
         - libdb4-4.8*
         ansible_workspace: "~/.ansible"
-        apigee_workspace: "~/apigee-workspace"
+        apigee_workspace: "~/.apigee-workspace"
         property_folders:
-        - "~/apigee-secure"
+        - "~/.apigee-secure"
       roles:
       - { role: apigee-opdk-modules }
       - { role: apigee-opdk-setup-os-epel, tags: ['epel'] }
