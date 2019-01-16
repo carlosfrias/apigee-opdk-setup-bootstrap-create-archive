@@ -17,8 +17,8 @@ These are the variables that can be updated for this role:
 | --- | --- |
 | copy_archive | Copy the Apigee Mirror archive from the control machine or use an existing archive on a target server. Default: `copy_archive: yes` |
 | apigee_home | Apigee installation home. Default: /opt/apigee |
-| opdk_version | The version of OPDK to use. Default: 4.18.05 |
-| apigeereleasever | Apigee release version. Default: opdk_version |
+| opdk_version is The version of OPDK to use. Default: 4.18.05 |
+| apigeereleasever | Apigee release version. Default: opdk_version is
 | archive_extra_packages | List of extra packages to include in the archive. Default list: yum-utils, yum-plugin-priorities, libdb4-4.8* |
 | no_proxy | no proxy environment variable. Default: '' |
 | http_proxy | http proxy environment variable. Default: '' |
