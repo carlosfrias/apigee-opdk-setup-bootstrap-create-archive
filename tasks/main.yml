@@ -1,10 +1,8 @@
 ---
 - name: Update cache with key and value
-  cache:
-    key: "{{ item.key }}"
-    value: "{{ item.value }}"
-  with_items:
-  - { key: 'copy_archive', value: '{{ copy_archive }}' }
+  set_fact:
+    cacheable: yes
+    copy_archive: '{{ copy_archive }}'
 
 - name: Uninstall the local mirror
   shell: '/opt/apigee/apigee-service/bin/apigee-service apigee-mirror uninstall'
